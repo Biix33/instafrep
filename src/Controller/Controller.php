@@ -4,12 +4,17 @@
 namespace App\Controller;
 
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class Controller
 {
-    public function homePage()
+    public function homePage(Request $request)
     {
-        return new Response('Hello');
+        $name = $request->get('name');
+        if (!empty($name)):
+            return new Response('Hello '.$name);
+        endif;
+        return new Response('Hello world');
     }
 }
