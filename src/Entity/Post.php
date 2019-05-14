@@ -32,19 +32,19 @@ class Post
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $isPublished = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $attachement;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $publishedAt;
 
     public function getId(): ?int
     {
@@ -92,21 +92,9 @@ class Post
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getIsPublished(): bool
-    {
-        return $this->isPublished;
-    }
-
-    public function setIsPublished(?bool $isPublished): self
-    {
-        $this->isPublished = $isPublished;
 
         return $this;
     }
@@ -119,6 +107,18 @@ class Post
     public function setAttachement(?string $attachement): self
     {
         $this->attachement = $attachement;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(?\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
