@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InstaFrep !{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% block main %}
+                <section class="col-md-8">
+                    {% for post in posts %}
+                        {% include 'post/post.html.twig' %}
+                    {% endfor %}
+                </section>
+            {% endblock %}
+            {% block aside %}
+                {% include 'post/aside.html.twig' %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

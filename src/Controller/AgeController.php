@@ -23,6 +23,6 @@ class AgeController extends AbstractController
     {
         $age = $request->get('age');
         $birthYear = $this->guessYear($age);
-        return $this->render('age/index.html.twig', ['year' => $birthYear]);
+        return $this->render('age/list.html.twig', ['year' => $birthYear]);
     }
 }
