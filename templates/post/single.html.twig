@@ -1,6 +1,6 @@
 {% extends 'post/list.html.twig' %}
 {% block main %}
     {% include 'post/post.html.twig' %}
-    <a href="{{ url('post') }}" class="btn btn-primary mt-3">Revenir à la liste</a>
+    <a href="{{ path('post') }}" class="btn btn-primary mt-3">Revenir à la liste</a>
 {% endblock %}
 {% block aside %}{% endblock %}

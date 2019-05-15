@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +46,16 @@ class Post
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $publishedAt;
+
+    /**
+     * Post constructor.
+     * @throws \Exception
+     */
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
 
     public function getId(): ?int
     {

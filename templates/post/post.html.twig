@@ -1,7 +1,7 @@
 <div class="card mt-3 post">
     <div class="row">
         <div class="col-md-2">
-            <a href="{{ absolute_url('/post/'~post.id )}}">
+            <a href="{{ path('post_single', {'id':post.id}) }}">
                 <img src="https://fakeimg.pl/440x320/" alt="" class="card-img avatar">
             </a>
         </div>

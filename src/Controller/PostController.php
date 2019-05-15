@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
@@ -22,9 +26,9 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/post/{id}", name="post_single")
+     * @Route("/post/{id}", name="post_single", requirements={"id"="[0-9]+"})
      * @param $id
-     * @return
+     * @return RedirectResponse|Response
      */
     public function showOne($id)
     {
@@ -34,6 +38,27 @@ class PostController extends AbstractController
         endif;
         return $this->render('post/single.html.twig', [
             'post' => $post,
+        ]);
+    }
+
+    /**
+     * @Route("post/new", name="post_create")
+     */
+    public function create(Request $request)
+    {
+        $form = $this->createForm(PostType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()):
+            // on crée un nouveau post
+            $post = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
+        endif;
+
+        return $this->render('post/create.html.twig', [
+            'post_form' => $form->createView(),
         ]);
     }
 }
