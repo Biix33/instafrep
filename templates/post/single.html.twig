@@ -1,16 +1,24 @@
 {% extends 'post/list.html.twig' %}
 {% block main %}
-    {% include 'post/post.html.twig' %}
+    <section class="col-md-8">
+        {% include 'post/post.html.twig' %}
+    </section>
 {% endblock %}
 {% block aside %}
-    <div class="col-md-4">
+    <aside class="col-md-4 mt-3">
         <div class="card">
-            <h5 class="card-title">Options</h5>
-            <div class="card-body">
-                <a href="{{ path('post') }}" class="btn btn-primary mt-3">Revenir à la liste</a>
-                <a href="{{ url('post_update', {'id': post.id}) }}" class="btn btn-warning">Mettre à jour</a>
-                <a href="{{ url('post_delete', {'id': post.id}) }}" class="btn btn-danger">Supprimer</a>
+            <div class="card-header text-center bg-success text-white">
+                <h5 class="card-title">Options</h5>
+            </div>
+            <div class="card-body text-center">
+                <a href="{{ path('post') }}" class="btn btn-primary">Revenir à la liste</a>
+                <a href="{{ url('post_update', {'id': post.id}) }}" class="btn btn-warning">
+                    <i class="fas fa-cog"></i>
+                </a>
+                <a href="{{ url('post_delete', {'id': post.id}) }}" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
             </div>
         </div>
-    </div>
+    </aside>
 {% endblock %}

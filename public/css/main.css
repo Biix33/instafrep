@@ -1,18 +1,9 @@
-.jumbotron {
-    background-color: #bff0ff;
-}
-
-.post {
-    box-shadow: 2px 2px 2px #007596;
-}
-
 .post-footer {
-    background-color: #e0f8ff;
+    background-color: rgba(76, 175, 80, 0.28);
 }
 
 .avatar {
     height: 100%;
-    border-radius: calc(.25rem - 1px) 0 0 0;
 }
 
 .fa-heart {
