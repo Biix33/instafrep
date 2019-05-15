@@ -24,6 +24,7 @@ class PostType extends AbstractType
                 'required' => false,
             ])
             ->add('publishedAt', DateType::class, [
+                'label' => 'Publié le',
                 'widget' => 'single_text',
                 'required' => false
             ])
