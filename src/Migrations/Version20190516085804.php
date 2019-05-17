@@ -34,6 +34,6 @@ final class Version20190516085804 extends AbstractMigration
 
         $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8D9D86650F');
         $this->addSql('DROP INDEX IDX_5A8A6C8D9D86650F ON post');
-        $this->addSql('ALTER TABLE post DROP user_id_id');
+        $this->addSql('ALTER TABLE post DROP user_id');
     }
 }

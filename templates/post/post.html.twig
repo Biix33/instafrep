@@ -1,14 +1,23 @@
 <div class="card mt-3 post">
-    <div class="row">
+    <div class="row card-header">
+        <div class="col-md-2">
+            <a href="{{ path('user_profile', {'id':post.userId.id}) }}">
+                <img alt="" class="card-img img-rounded"
+                     src="https://fakeimg.pl/440x320/">
+            </a>
+        </div>
+        <div class="col-md-10 text-center">
+            {{ post.userId.pseudo }}
+        </div>
+    </div>
+    <div class="row card-body">
         <div class="col-md-2">
             <a href="{{ path('post_single', {'id':post.id}) }}">
                 <img src="https://fakeimg.pl/440x320/" alt="" class="card-img avatar">
             </a>
         </div>
         <div class="col-md-10">
-            <div class="card-body">
-                {{ post.content }}
-            </div>
+            {{ post.content }}
         </div>
     </div>
     <div class="card-footer post-footer">
