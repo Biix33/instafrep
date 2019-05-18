@@ -18,7 +18,9 @@ class PostType extends AbstractType
             ->add('content', null, [
                 'label' => 'Exprimez-vous !',
             ])
-            ->add('public')
+            ->add('public', null, [
+                'label' => 'Post publique',
+            ])
             ->add('attachement', FileType::class, [
                 'label' => 'Avatar',
                 'required' => false,

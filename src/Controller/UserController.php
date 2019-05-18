@@ -6,12 +6,15 @@ use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/user/{id}", name="user_profile")
+     * @param $id
+     * @return Response
      */
     public function profile($id)
     {
@@ -29,7 +32,7 @@ class UserController extends AbstractController
     /**
      * @Route("/user/new", name="user_create")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function create(Request $request)
     {
