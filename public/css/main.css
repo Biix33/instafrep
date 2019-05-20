@@ -1,5 +1,9 @@
 .post-footer {
-    background-color: rgba(76, 175, 80, 0.28);
+    background-color: #18BC9C;
+}
+
+.bg-header {
+    background-color: #2C3E50;
 }
 
 .avatar {

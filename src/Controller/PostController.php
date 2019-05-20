@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +55,9 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()):
             // on crée un nouveau post
+            $user = $this->getDoctrine()->getRepository(User::class)->find(rand(11, 19));
             $post = $form->getData();
+            $post->setUserId($user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();

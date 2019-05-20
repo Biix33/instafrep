@@ -21,12 +21,16 @@
         </div>
     </div>
     <div class="card-footer post-footer">
-        <div class="row justify-content-between text-muted">
+        <div class="row justify-content-between">
             <div class="">
                 <i class="fas fa-heart"></i><span> Likes</span>
                 <i class="fas fa-comment-alt"></i><span> Comments</span>
             </div>
-            <span>publié il y a {{ post.publishedAt.format('d-m-Y') }}</span>
+            <span>publié il y a
+                {% if post.publishedAt is not null %}
+                    {{ post.publishedAt.format('d-m-Y') }}
+                {% endif %}
+            </span>
         </div>
     </div>
 </div>
