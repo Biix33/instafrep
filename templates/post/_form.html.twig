@@ -1,0 +1,35 @@
+{{ form_start(post_form) }}
+<div class="mb-3">
+    <div class="form-group">
+        {{ form_label(post_form.content) }}
+        {{ form_widget(post_form.content, {'attr': {'class': 'form-control'}}) }}
+        <div class="bg-warning">
+            {{ form_errors(post_form.content) }}
+        </div>
+    </div>
+    <div class="custom-file">
+        {{ form_label(post_form.attachement, null, {'label_attr': {'class': 'custom-file-label'}}) }}
+        {{ form_widget(post_form.attachement, {'attr': {'class': 'custom-file-input'}}) }}
+        <div class="bg-warning">
+            {{ form_errors(post_form.attachement) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(post_form.publishedAt) }}
+        {{ form_widget(post_form.publishedAt, {'attr': {'class': 'form-control'}}) }}
+        <div class="bg-warning">
+            {{ form_errors(post_form.publishedAt) }}
+        </div>
+    </div>
+    <div class="custom-control custom-checkbox">
+        {{ form_widget(post_form.public, {'attr': {'class': 'custom-control-input'}}) }}
+        {{ form_label(post_form.public, null, {'label_attr': {'class': 'custom-control-label'}}) }}
+        <div class="bg-warning">
+            {{ form_errors(post_form.public) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_widget(post_form.submit, {'attr': {'class': 'form-control btn btn-primary'}}) }}
+    </div>
+</div>
+{{ form_end(post_form) }}

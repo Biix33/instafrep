@@ -2,6 +2,13 @@
 {% block main %}
     <section class="col-md-8">
         {% include 'post/post.html.twig' %}
+        {% for comment in post.comments %}
+            {% include 'comment/show.html.twig' %}
+        {% else %}
+            <div class="alert alert-info">
+                Pas encore de commentaires !
+            </div>
+        {% endfor %}
     </section>
 {% endblock %}
 {% block aside %}
@@ -18,7 +25,9 @@
                 <a href="{{ url('post_delete', {'id': post.id}) }}" class="btn btn-danger">
                     <i class="fas fa-trash-alt"></i>
                 </a>
+                <a href="{{ url('comment_new', {'post_id': post.id}) }}" class="btn btn-primary">Ecrire un commentaire</a>
             </div>
         </div>
+        {% include 'comment/_form.html.twig' %}
     </aside>
 {% endblock %}

@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +35,13 @@ class PostController extends AbstractController
     public function showOne($id)
     {
         $post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+        $form = $this->createForm(CommentType::class);
         if ($post === null):
             return $this->redirectToRoute('post');
         endif;
         return $this->render('post/single.html.twig', [
             'post' => $post,
+            'form' => $form->createView(),
         ]);
     }
 

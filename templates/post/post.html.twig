@@ -24,7 +24,7 @@
         <div class="row justify-content-between">
             <div class="">
                 <i class="fas fa-heart"></i><span> Likes</span>
-                <i class="fas fa-comment-alt"></i><span> Comments</span>
+                <i class="fas fa-comment-alt"></i><span> {{ post.comments.count }} Commentaires</span>
             </div>
             <span>publié il y a
                 {% if post.publishedAt is not null %}
