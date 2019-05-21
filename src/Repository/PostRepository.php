@@ -19,6 +19,27 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function findHomePage($skip = 0, $take = 5)
+    {
+        $results = $this->createQueryBuilder('p')
+            ->select('p as post, COUNT(c.id) AS nbComments')
+            ->leftJoin('p.comments', 'c')
+            ->where('p.public = true')
+            ->groupBy('p.id')
+            ->orderBy('p.id', 'DESC')
+            ->setFirstResult($skip)
+            ->setMaxResults($take)
+            ->getQuery()
+            ->getResult();
+        $posts = [];
+        foreach ($results as $result):
+            $post = $result['post'];
+            $post->setNbComments($result['nbComments']);
+            array_push($posts, $post);
+        endforeach;
+        return $posts;
+    }
+
 //     /**
 //      * @return Post[] Returns an array of Post objects
 //      */
@@ -35,8 +56,7 @@ class PostRepository extends ServiceEntityRepository
     }*/
 
 
-    /*
-    public function findOneBySomeField($value): ?Post
+    /*public function findOneBySomeField($value): ?Post
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
@@ -44,6 +64,6 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
-    }
-    */
+    }*/
+
 }

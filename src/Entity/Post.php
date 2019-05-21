@@ -64,6 +64,32 @@ class Post
     private $comments;
 
     /**
+     * @var int
+     */
+    private $nbComments;
+
+    /**
+     * @return int
+     */
+    public function getNbComments(): int
+    {
+        if (isset($this->nbComments)):
+            return $this->nbComments;
+        endif;
+        return $this->comments->count();
+    }
+
+    /**
+     * @param int $nbComments
+     * @return Post
+     */
+    public function setNbComments(int $nbComments): Post
+    {
+        $this->nbComments = $nbComments;
+        return $this;
+    }
+
+    /**
      * Post constructor.
      * @throws \Exception
      */
@@ -168,6 +194,8 @@ class Post
      */
     public function getComments(): Collection
     {
+        $comments = $this->comments;
+        $this->nbComments = $comments->count();
         return $this->comments;
     }
 

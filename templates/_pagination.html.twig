@@ -1,0 +1,13 @@
+<ul class="pagination">
+    <li class="page-item">
+        <a class="page-link" href="{{ path('post', {'p': page-1}) }}">Précédent</a>
+    </li>
+    {% for i in 1..nb_page %}
+        <li class="page-item">
+            <a class="page-link" href="{{ path('post', {'p':  i }) }}">{{ i }}</a>
+        </li>
+    {% endfor %}
+    <li class="page-item">
+        <a class="page-link" href="{{ path('post', {'p': page+1}) }}">Suivant</a>
+    </li>
+</ul>

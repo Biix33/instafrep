@@ -1,7 +1,7 @@
 {% extends 'post/list.html.twig' %}
 {% block main %}
     <section class="col-md-8">
-        {% include 'post/post.html.twig' %}
+        {% include 'post/_post.html.twig' %}
         {% for comment in post.comments %}
             {% include 'comment/show.html.twig' %}
         {% else %}

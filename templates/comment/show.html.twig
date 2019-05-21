@@ -1,14 +1,12 @@
 <div class="card mt-3">
-    <div class="card-header">
-        <div class="row">
-            <div class="card-img col-md-4">
-                <img src="{{ comment.user.avatar }}" alt="">
-            </div>
-            <h5 class="card-title col-md-8 text-center">{{ comment.user.pseudo }}</h5>
-        </div>
-    </div>
     <div class="card-body">
-        {{ comment.content }}
+        <a href="{{ url('user_profile', {'id': comment.user.id}) }}">
+            <span class="">
+                <img class="img-fluid avatar" src="{{ comment.user.avatar }}" alt="">
+            </span>
+            <span>{{ comment.user.pseudo }}</span>
+        </a>
+        <span>{{ comment.content }}</span>
     </div>
     <div class="card-footer">
         <a href="{{ url('comment_edit', {'id': comment.id}) }}" class="btn btn-warning">

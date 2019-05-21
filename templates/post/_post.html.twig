@@ -2,29 +2,29 @@
     <div class="row card-header">
         <div class="col-md-2">
             <a href="{{ path('user_profile', {'id':post.userId.id}) }}">
-                <img alt="" class="card-img"
-                     src="https://fakeimg.pl/440x320/">
+                <img alt="" class="card-img img-fluid avatar"
+                     src="{{ post.userId.avatar }}">
             </a>
         </div>
         <div class="col-md-10 text-center">
-            <h5 class="card-title">{{ post.userId.pseudo }}</h5>
+            <h5 class="card-title">{{ post.userId.pseudo }}{{ post.id }}</h5>
         </div>
     </div>
-    <div class="row card-body">
-        <div class="col-md-2">
-            <a href="{{ path('post_single', {'id':post.id}) }}">
-                <img src="https://fakeimg.pl/440x320/" alt="" class="card-img avatar">
-            </a>
-        </div>
-        <div class="col-md-10">
-            {{ post.content }}
-        </div>
+    <div class="card-body">
+        <a href="{{ path('post_single', {'id':post.id}) }}" class="row">
+            <div class="col-md-2">
+                <img src="{{ post.attachement }}" alt="" class="card-img img-fluid">
+            </div>
+            <div class="col-md-10">
+                {{ post.content }}
+            </div>
+        </a>
     </div>
     <div class="card-footer post-footer">
         <div class="row justify-content-between">
             <div class="">
                 <i class="fas fa-heart"></i><span> Likes</span>
-                <i class="fas fa-comment-alt"></i><span> {{ post.comments.count }} Commentaires</span>
+                <i class="fas fa-comment-alt"></i><span> {{ post.nbComments }} Commentaires</span>
             </div>
             <span>publié il y a
                 {% if post.publishedAt is not null %}

@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             {% for post in user.posts %}
-            {% include 'post/post.html.twig' %}
+            {% include 'post/_post.html.twig' %}
                 {% else %}
                 <div>{{ user }} N'a pas encore de posts !</div>
             {% endfor %}

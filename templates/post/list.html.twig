@@ -8,13 +8,16 @@
             {% block main %}
                 <section class="col-md-8">
                     {% for post in posts %}
-                        {% include 'post/post.html.twig' %}
+                        {% include 'post/_post.html.twig' %}
                     {% endfor %}
                 </section>
             {% endblock %}
             {% block aside %}
                 {% include 'post/aside.html.twig' %}
             {% endblock %}
+            <div class="row mt-3">
+                {% include '_pagination.html.twig' %}
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -15,15 +15,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post", name="post")
+     * @Route("/posts", name="post", methods={"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findBy([
-            'public' => true,
-        ]);
+        $currentPage = $request->query->get('p');
+        $limit = $request->query->get('l');
+        $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
+        $skip = (($page - 1) * 5);
+        $nbPosts = $this->getDoctrine()->getRepository(Post::class)->count(['public' => 'true']);
+        $nbPages = ceil($nbPosts / 5);
+        $posts = $this
+            ->getDoctrine()
+            ->getRepository(Post::class)
+            ->findHomePage($skip, 5);
+
         return $this->render('post/list.html.twig', [
             'posts' => $posts,
+            'page' => $page,
+            'nb_page' => $nbPages,
         ]);
     }
 
