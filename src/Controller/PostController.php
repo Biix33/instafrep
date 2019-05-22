@@ -17,20 +17,21 @@ class PostController extends AbstractController
     /**
      * @Route("/posts", name="post", methods={"GET"})
      * @param Request $request
+     * @param int $take
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $take = 5)
     {
         $currentPage = $request->query->get('p');
         $limit = $request->query->get('l');
         $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
-        $skip = (($page - 1) * 5);
+        $skip = (($page - 1) * $take);
         $nbPosts = $this->getDoctrine()->getRepository(Post::class)->count(['public' => 'true']);
-        $nbPages = ceil($nbPosts / 5);
+        $nbPages = ceil($nbPosts / $take);
         $posts = $this
             ->getDoctrine()
             ->getRepository(Post::class)
-            ->findHomePage($skip, 5);
+            ->findHomePage($skip, $take);
 
         return $this->render('post/list.html.twig', [
             'posts' => $posts,
