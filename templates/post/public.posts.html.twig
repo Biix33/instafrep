@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InstaFrep !{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% block main %}
+                <section class="col-md-8">
+                    {% for post in posts %}
+                        {% include 'post/_post.html.twig' %}
+                    {% endfor %}
+                    <div class="mt-3">
+                        {% include '_pagination.html.twig' %}
+                    </div>
+                </section>
+            {% endblock %}
+            {% block aside %}
+                <aside class="mt-3">
+                    {% include 'security/_form_login.html.twig' %}
+                </aside>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

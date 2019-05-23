@@ -14,8 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
+    private function pagination()
+    {
+        // TODO
+    }
+
     /**
-     * @Route("/posts", name="post", methods={"GET"})
+     * @Route("/", name="post", methods={"GET"})
      * @param Request $request
      * @param int $take
      * @return Response
@@ -33,11 +38,35 @@ class PostController extends AbstractController
             ->getRepository(Post::class)
             ->findHomePage($skip, $take);
 
-        return $this->render('post/list.html.twig', [
+        return $this->render('post/public.posts.html.twig', [
             'posts' => $posts,
             'page' => $page,
             'nb_page' => $nbPages,
+            'last_username' => $limit,
         ]);
+    }
+
+    /**
+     * @Route("/post", name="post")
+     * @param Request $request
+     * @return Response
+     */
+    public function home(Request $request, $take = 5)
+    {
+        $currentPage = $request->query->get('p');
+        $limit = $request->query->get('l');
+        $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
+        $skip = (($page - 1) * $take);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findAll();
+        $nbPosts = count($posts);
+        $nbPages = ceil($nbPosts / $take);
+        return $this->render('post/posts.html.twig',
+            [
+                'posts' => $posts,
+                'nb_page' => $nbPages,
+                'page' => $page
+            ]
+        );
     }
 
     /**

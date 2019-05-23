@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,7 +32,7 @@ class AppFixtures extends Fixture
                 ->setPseudo($faker->firstName.$i)
                 ->setEmail($faker->email)
                 ->setBirthday(new \DateTime($faker->dateTimeThisCentury->format('Y-m-d')))
-                ->setAvatar("https://i.pravatar.cc/150?img=$i")
+                ->setAvatar("https://i.pravatar.cc/100?img="."1".$i)
                 ->setPassword($this->encoder->encodePassword($user, 'azeaze'))
                 ->setCreatedAt(new \DateTime());
             $manager->persist($user);
@@ -49,6 +50,28 @@ class AppFixtures extends Fixture
                 ->setCreatedAt($date)
                 ->setPublishedAt($date->add(new \DateInterval('P1D')))
                 ->setUserId($users[rand(1, 9)]);
+
+            // Creation des commentaires
+            $nbComments = rand(3, 8);
+            for ($j = 0; $j < $nbComments; $j++) {
+
+                $comment = new Comment();
+                $comment->setContent($faker->realText(280));
+
+                $key = array_rand($users);
+                $commentAuthor = $users[$key];
+                $comment->setUser($commentAuthor);
+
+                // Liaison du commentaire à son post
+                $comment->setPost($post);
+                // OU
+//                $post->addComment($comment);
+
+                // Persister le commentaire !!
+                // (inutile ici, car automatiquement configuré dans l'entité Post (cascade))
+                $manager->persist($comment);
+            }
+
             $manager->persist($post);
         endfor;
 

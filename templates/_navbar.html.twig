@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#"
+           role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img src="{{ app.user.avatar }}" alt="" class="img-fluid avatar"> {{ app.user.pseudo }}
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{ path('user_profile', {'id': app.user.id}) }}">Profile</a>
+            <a class="dropdown-item" href="#">Posts</a>
+        </div>
+    </div>
+</nav>
