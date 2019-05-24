@@ -1,6 +1,0 @@
-<form method="post" action="{{ path('like_post', {'user': app.user.id, 'post':post.id}) }}"
-      onsubmit="return alert('Are you sure you want to delete this item?');">
-{#    <input type="hidden" name="_method" value="DELETE">#}
-{#    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">#}
-        <button class="btn btn-danger"><i class="fas fa-heart"></i></button>
-</form>

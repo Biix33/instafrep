@@ -69,6 +69,11 @@ class Post
     private $nbComments;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="likes")
+     */
+    private $likers;
+
+    /**
      * @return int
      */
     public function getNbComments(): int
@@ -97,6 +102,7 @@ class Post
     {
         $this->createdAt = new DateTime();
         $this->comments = new ArrayCollection();
+        $this->likers = new ArrayCollection();
     }
 
 
@@ -217,6 +223,34 @@ class Post
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getLikers(): Collection
+    {
+        return $this->likers;
+    }
+
+    public function addLiker(User $liker): self
+    {
+        if (!$this->likers->contains($liker)) {
+            $this->likers[] = $liker;
+            $liker->like($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiker(User $liker): self
+    {
+        if ($this->likers->contains($liker)) {
+            $this->likers->removeElement($liker);
+            $liker->unlike($this);
         }
 
         return $this;

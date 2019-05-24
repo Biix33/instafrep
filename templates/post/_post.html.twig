@@ -23,14 +23,27 @@
     <div class="card-footer post-footer">
         <div class="row justify-content-between">
             <div class="">
-                <span>{% include 'post/_like.html.twig' %}</span><span id="{{ 'post' ~ post.id }}"></span> Likes
-                <i class="fas fa-comment-alt"></i><span> {{ post.nbComments }} Commentaires</span>
+                <small class="">
+                    <a href="{{ url('like_post', {'post': post.id}) }}">
+                        <button class="btn">
+                            {% if app.user and app.user.doesLike(post) %}
+                                <i class="fas fa-heart"></i>
+                            {% else %}
+                                <i class="far fa-heart"></i>
+                            {% endif %}
+                        </button>
+                    </a><strong>{{ post.likers | length }}</strong>
+                    Likes
+                </small>
+                <small class="">
+                    <strong><i class="fas fa-comment-alt"></i></strong> {{ post.nbComments }} Commentaires
+                </small>
             </div>
-            <span>publié il y a
+            <small>publié il y a
                 {% if post.publishedAt is not null %}
                     {{ post.publishedAt.format('d-m-Y') }}
                 {% endif %}
-            </span>
+            </small>
         </div>
     </div>
 </div>

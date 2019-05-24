@@ -29,10 +29,10 @@ class AppFixtures extends Fixture
             $user = new User();
             $user
                 ->setName($faker->name)
-                ->setPseudo($faker->firstName.$i)
+                ->setPseudo($faker->firstName . $i)
                 ->setEmail($faker->email)
                 ->setBirthday(new \DateTime($faker->dateTimeThisCentury->format('Y-m-d')))
-                ->setAvatar("https://i.pravatar.cc/100?img="."1".$i)
+                ->setAvatar("https://i.pravatar.cc/100?img=" . "1" . $i)
                 ->setPassword($this->encoder->encodePassword($user, 'azeaze'))
                 ->setCreatedAt(new \DateTime());
             $manager->persist($user);
@@ -71,6 +71,12 @@ class AppFixtures extends Fixture
                 // (inutile ici, car automatiquement configuré dans l'entité Post (cascade))
                 $manager->persist($comment);
             }
+
+            $nbLikers = rand(0, count($users));
+            for ($j = 0; $j < $nbLikers; $j++):
+                $u = $users[$j];
+                $u->like($post);
+            endfor;
 
             $manager->persist($post);
         endfor;

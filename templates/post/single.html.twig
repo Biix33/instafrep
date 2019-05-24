@@ -19,12 +19,14 @@
             </div>
             <div class="card-body text-center">
                 <a href="{{ path('post') }}" class="btn btn-primary">Revenir à la liste</a>
-                <a href="{{ url('post_update', {'id': post.id}) }}" class="btn btn-warning">
-                    <i class="fas fa-cog"></i>
-                </a>
-                <a href="{{ url('post_delete', {'id': post.id}) }}" class="btn btn-danger">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                {% if app.user and app.user == post.userId %}
+                    <a href="{{ url('post_update', {'id': post.id}) }}" class="btn btn-warning">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <a href="{{ url('post_delete', {'id': post.id}) }}" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                {% endif %}
                 <a href="#writeComment" class="btn btn-primary"
                    data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">Ecrire un
                     commentaire</a>
