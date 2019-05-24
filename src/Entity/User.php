@@ -103,6 +103,10 @@ class User implements UserInterface
         return $this->pseudo;
     }
 
+    /**
+     * @param string $pseudo
+     * @return User
+     */
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;

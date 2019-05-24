@@ -23,7 +23,7 @@
     <div class="card-footer post-footer">
         <div class="row justify-content-between">
             <div class="">
-                <i class="fas fa-heart"></i><span> Likes</span>
+                <span>{% include 'post/_like.html.twig' %}</span><span id="{{ 'post' ~ post.id }}"></span> Likes
                 <i class="fas fa-comment-alt"></i><span> {{ post.nbComments }} Commentaires</span>
             </div>
             <span>publié il y a

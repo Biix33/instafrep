@@ -49,6 +49,7 @@ class PostController extends AbstractController
     /**
      * @Route("/post", name="post")
      * @param Request $request
+     * @param int $take
      * @return Response
      */
     public function home(Request $request, $take = 5)
@@ -57,8 +58,8 @@ class PostController extends AbstractController
         $limit = $request->query->get('l');
         $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
         $skip = (($page - 1) * $take);
-        $posts = $this->getDoctrine()->getRepository(Post::class)->findAll();
-        $nbPosts = count($posts);
+        $posts = $this->getDoctrine()->getRepository(Post::class)->findHomePage($skip, $take);
+        $nbPosts = count($this->getDoctrine()->getRepository(Post::class)->findAll());
         $nbPages = ceil($nbPosts / $take);
         return $this->render('post/posts.html.twig',
             [
@@ -105,6 +106,7 @@ class PostController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);
             $entityManager->flush();
+            $this->addFlash('notice', 'Thx lord for your post !');
 
             return $this->redirectToRoute('post');
         endif;
@@ -154,5 +156,15 @@ class PostController extends AbstractController
         return $this->render('post/create.html.twig', [
             'post_form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/like/{user}/{post}", name="like_post")
+     * @param $post
+     * @param $user
+     */
+    public function like($post, $user)
+    {
+
     }
 }

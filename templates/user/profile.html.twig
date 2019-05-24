@@ -9,13 +9,22 @@
             <div class="card-img col-md-4">
                 <img src="{{ user.avatar }}" alt="">
             </div>
-            <h5 class="card-title col-md-8 text-center">{{ user.pseudo }}</h5>
+            <div class="col-md-8 tex-center">
+                <h5 class="card-title">{{ user.pseudo }}</h5>
+                {% if app.user.id == user.id %}
+                    <p class="justify-content-between text-muted">
+                        <span>{{ app.user.posts.count }} posts</span>
+                        <span>{{ app.user.posts.count }} abonnements</span>
+                        <span>{{ app.user.posts.count }} abonnés</span>
+                    </p>
+                {% endif %}
+            </div>
         </div>
         <div class="card-body">
             {% for post in user.posts %}
             {% include 'post/_post.html.twig' %}
                 {% else %}
-                <div>{{ user }} N'a pas encore de posts !</div>
+                <div>{{ user.pseudo }} N'a pas encore de posts !</div>
             {% endfor %}
         </div>
     </div>
