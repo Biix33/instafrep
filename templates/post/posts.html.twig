@@ -7,9 +7,9 @@
         <div class="row justify-content-center">
             {% block main %}
                 <section class="col-md-8">
-                    {% for post in posts %}
-                        {% include 'post/_post.html.twig' %}
-                    {% endfor %}
+                    <div id="posts">
+                        {% include 'post/_loop.html.twig' %}
+                    </div>
                     <div class="mt-3">
                         {% include '_pagination.html.twig' %}
                     </div>
@@ -20,4 +20,8 @@
             {% endblock %}
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/pagination.js') }}"></script>
 {% endblock %}

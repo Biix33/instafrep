@@ -36,7 +36,7 @@ class PostController extends AbstractController
         $posts = $this
             ->getDoctrine()
             ->getRepository(Post::class)
-            ->findHomePage($skip, $take);
+            ->findHomePage($skip, $take, true);
 
         return $this->render('post/public.posts.html.twig', [
             'posts' => $posts,
@@ -61,6 +61,11 @@ class PostController extends AbstractController
         $posts = $this->getDoctrine()->getRepository(Post::class)->findHomePage($skip, $take);
         $nbPosts = count($this->getDoctrine()->getRepository(Post::class)->findAll());
         $nbPages = ceil($nbPosts / $take);
+
+        if ($request->isXmlHttpRequest()):
+            return $this->render('post/_loop.html.twig', ['posts' => $posts]);
+        endif;
+
         return $this->render('post/posts.html.twig',
             [
                 'posts' => $posts,
@@ -172,14 +177,14 @@ class PostController extends AbstractController
         endif;
 
         $user = $this->getUser();
+        if (!$user->doesLike($post)):
+            $user->like($post);
+        else:
+            $user->unlike($post);
+        endif;
+        $manager = $this->getDoctrine()->getManager();
+        $manager->flush();
         if ($request->isXmlHttpRequest()):
-            if (!$user->doesLike($post)):
-                $user->like($post);
-            else:
-                $user->unlike($post);
-            endif;
-            $manager = $this->getDoctrine()->getManager();
-            $manager->flush();
             return new Response($post->getLikers()->count());
         endif;
 

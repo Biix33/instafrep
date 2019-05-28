@@ -19,18 +19,21 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findHomePage($skip = 0, $take = 5)
+    public function findHomePage($skip = 0, $take = 5, $onlyPublic = false)
     {
-        $results = $this->createQueryBuilder('p')
+        $queryBuilder = $this->createQueryBuilder('p')
             ->select('p as post, COUNT(c.id) AS nbComments')
             ->leftJoin('p.comments', 'c')
-            ->where('p.public = true')
             ->groupBy('p.id')
             ->orderBy('p.id', 'DESC')
             ->setFirstResult($skip)
-            ->setMaxResults($take)
-            ->getQuery()
-            ->getResult();
+            ->setMaxResults($take);
+
+        if ($onlyPublic === true):
+            $queryBuilder = $queryBuilder->where('p.public = true');
+        endif;
+
+        $results = $queryBuilder->getQuery()->getResult();
         $posts = [];
         foreach ($results as $result):
             $post = $result['post'];
