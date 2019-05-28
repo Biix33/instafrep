@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container justify-content-center">
+        <p class="display-4">Le numéro gagnant est le : <span id="num">{{ rand }}</span></p>
+        <button id="roll" class="btn btn-primary">Roll the dice</button>
+    </div>
+    <script src="{{ asset('js/index.js') }}"></script>
+{% endblock %}

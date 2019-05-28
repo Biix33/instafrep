@@ -24,7 +24,7 @@
         <div class="row justify-content-between">
             <div class="">
                 <small class="">
-                    <a href="{{ url('like_post', {'post': post.id}) }}">
+                    <a href="{{ url('like_post', {'post': post.id}) }}" class="like">
                         <button class="btn">
                             {% if app.user and app.user.doesLike(post) %}
                                 <i class="fas fa-heart"></i>

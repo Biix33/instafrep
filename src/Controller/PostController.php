@@ -160,19 +160,28 @@ class PostController extends AbstractController
 
     /**
      * @Route("post/like/{post}", name="like_post")
+     * @param Request $request
      * @param $post
      * @return RedirectResponse
      */
-    public function like($post)
+    public function like(Request $request, $post)
     {
         $post = $this->getDoctrine()->getRepository(Post::class)->find($post);
         if (empty($post)):
             throw $this->createNotFoundException('Post introuvable');
         endif;
 
-        $this->getUser()->like($post);
-        $manager = $this->getDoctrine()->getManager();
-        $manager->flush();
+        $user = $this->getUser();
+        if ($request->isXmlHttpRequest()):
+            if (!$user->doesLike($post)):
+                $user->like($post);
+            else:
+                $user->unlike($post);
+            endif;
+            $manager = $this->getDoctrine()->getManager();
+            $manager->flush();
+            return new Response($post->getLikers()->count());
+        endif;
 
         return $this->redirectToRoute('post');
     }
