@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $comboUnlock;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -332,5 +337,17 @@ class User implements UserInterface
     public function doesLike(Post $post):bool
     {
         return $this->likes->contains($post);
+    }
+
+    public function getComboUnlock(): ?bool
+    {
+        return $this->comboUnlock;
+    }
+
+    public function setComboUnlock(bool $comboUnlock): self
+    {
+        $this->comboUnlock = $comboUnlock;
+
+        return $this;
     }
 }

@@ -46,3 +46,7 @@
         transform: rotate(1800deg);
     }
 }
+
+.golden {
+    background-color: gold;
+}

@@ -66,7 +66,7 @@ class PostController extends AbstractController
         $response = new Response();
 
         if ($request->isXmlHttpRequest()):
-            sleep(3);
+            sleep(3); // simule une latence du serveur
             $response->headers->set('X-infrep-Is-last-page', $isLastPage ? '1' : '0');
             return $this->render('post/_loop.html.twig', ['posts' => $posts], $response);
         endif;

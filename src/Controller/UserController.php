@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +13,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
+     * @Route("user/combo", name="user_combo")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function combo(Request $request)
+    {
+        if ($request->isXmlHttpRequest()):
+            $user = $this->getUser();
+            $user->setComboUnlock(true);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+            return new Response(null, 204);
+        endif;
+        return $this->redirectToRoute('post');
+    }
+
+    /**
      * @Route("/user/{id}", name="user_profile")
-     * @param $id
+     * @param int $id
      * @return Response
      */
-    public function profile($id)
+    public function profile(int $id)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
@@ -46,12 +63,12 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("user/update/{id}", name="user_update")
-     * @param $id
+     * @Route("user/update/{id}", name="user_update", requirements={"id": "\d+"})
+     * @param int $id
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);

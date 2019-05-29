@@ -7,7 +7,8 @@
             </a>
         </div>
         <div class="col-md-10 text-center">
-            <h5 class="card-title">{{ post.userId.pseudo }}</h5>
+            <h5 class="card-title {{ (post.userId.comboUnlock) ? 'golden':'' }}"
+                data-user="{{ post.userId.id }}">{{ post.userId.pseudo }}</h5>
         </div>
     </div>
     <div class="card-body">
