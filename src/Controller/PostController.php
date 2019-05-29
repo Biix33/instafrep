@@ -54,25 +54,28 @@ class PostController extends AbstractController
      */
     public function home(Request $request, $take = 5)
     {
-        $currentPage = $request->query->get('p');
+        $currentPage = (int)$request->query->get('p');
         $limit = $request->query->get('l');
         $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
         $skip = (($page - 1) * $take);
         $posts = $this->getDoctrine()->getRepository(Post::class)->findHomePage($skip, $take);
         $nbPosts = count($this->getDoctrine()->getRepository(Post::class)->findAll());
-        $nbPages = ceil($nbPosts / $take);
+        $nbPages = intval(ceil($nbPosts / $take));
+
+        $isLastPage = $page === $nbPages;
+        $response = new Response();
 
         if ($request->isXmlHttpRequest()):
-            return $this->render('post/_loop.html.twig', ['posts' => $posts]);
+            sleep(3);
+            $response->headers->set('X-infrep-Is-last-page', $isLastPage ? '1' : '0');
+            return $this->render('post/_loop.html.twig', ['posts' => $posts], $response);
         endif;
 
-        return $this->render('post/posts.html.twig',
-            [
-                'posts' => $posts,
-                'nb_page' => $nbPages,
-                'page' => $page
-            ]
-        );
+        return $this->render('post/posts.html.twig', [
+            'posts' => $posts,
+            'nb_page' => $nbPages,
+            'page' => $page
+        ]);
     }
 
     /**
