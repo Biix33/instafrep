@@ -8,7 +8,7 @@ $(() => {
     $(window).on('scroll', function(e) {
         if (isLoading) return;
         let scrollTop = $(this).scrollTop() + $(window).height();
-        if (scrollTop > $(document).height()/2) {
+        if (scrollTop > $(document).height()/2 && !isDone) {
             $postContainer.append(loader);
             fetch(`post?p=${nextPage}`, {
                 headers: {
