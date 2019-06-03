@@ -16,6 +16,9 @@ $(() => {
             tryCombo.push(e.key);
             if (areArraysSimilar(combo, tryCombo)) {
                 alert("You're master");
+                $('.navbar')
+                    .removeClass('bg-dark')
+                    .addClass('golden');
                 fetch('user/combo', {
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',

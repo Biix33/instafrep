@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("user/combo", name="user_combo")
+     * @Route("user/combo", name="user_combo", methods={"PUT", "PATCH"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
@@ -22,12 +22,10 @@ class UserController extends AbstractController
         if ($request->isXmlHttpRequest()):
             $user = $this->getUser();
             $user->setComboUnlock(true);
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($user);
-            $manager->flush();
+            $this->getDoctrine()->getManager()->flush();
             return new Response(null, 204);
         endif;
-        return $this->redirectToRoute('post');
+        return new Response('Use only AJAX to reach this route', 405);
     }
 
     /**
