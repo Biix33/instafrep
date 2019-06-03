@@ -15,16 +15,21 @@ $(() => {
         if (combo.includes(e.key)) {
             tryCombo.push(e.key);
             if (areArraysSimilar(combo, tryCombo)) {
-                alert("You're master");
-                $('.navbar')
-                    .removeClass('bg-dark')
-                    .addClass('golden');
                 fetch('user/combo', {
+                    method: 'PATCH',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
                     }
                 }).then((response) => {
-                    console.log(response.text());
+                    if (response.status === 204) {
+                        alert("You're master");
+                        $('.navbar')
+                            .removeClass('bg-dark')
+                            .addClass('golden');
+                        $(`.card-footer[data-user="${INSTAFREP_CURRENT_USER}"]`)
+                            .removeClass('post-footer')
+                            .addClass('golden');
+                    }
                 })
             }
         }

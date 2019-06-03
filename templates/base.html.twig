@@ -33,6 +33,9 @@
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
             integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
             crossorigin="anonymous"></script>
+    {% if app.user is not empty %}
+    <script>const INSTAFREP_CURRENT_USER = {{ app.user.id }}</script>
+    {% endif %}
     <script src="{{ asset('js/like.js') }}"></script>
     <script src="{{ asset('js/combo.js') }}"></script>
 {% endblock %}
