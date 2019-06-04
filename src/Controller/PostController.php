@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
-    private function pagination()
-    {
-        // TODO
-    }
-
     /**
      * @Route("/", name="post", methods={"GET"})
      * @param Request $request
@@ -27,6 +23,10 @@ class PostController extends AbstractController
      */
     public function index(Request $request, $take = 5)
     {
+        if ($this->getUser()):
+            return $this->redirectToRoute('post');
+        endif;
+
         $currentPage = $request->query->get('p');
         $limit = $request->query->get('l');
         $page = (!isset($currentPage) || $currentPage <= 0) ? 1 : $currentPage;
@@ -100,6 +100,7 @@ class PostController extends AbstractController
      * @Route("post/new", name="post_create")
      * @param Request $request
      * @return RedirectResponse|Response
+     * @throws \Exception
      */
     public function create(Request $request)
     {
@@ -108,8 +109,17 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()):
             // on crée un nouveau post
-            $user = $this->getDoctrine()->getRepository(User::class)->find(rand(11, 19));
+            $user = $this->getUser();
+            /** @var Post $post */
             $post = $form->getData();
+            /** @var UploadedFile $file */
+            $file = $post->getAttachement();
+            $ext = $file->guessExtension();
+            $date = new \DateTime();
+            $basename = 'post-attachment-' . $date->format('YmdHis');
+            $filename = $basename . '.' . $ext;
+            $file->move($this->getParameter('user_upload_folder'), $filename);
+            $post->setAttachement($filename);
             $post->setUserId($user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($post);

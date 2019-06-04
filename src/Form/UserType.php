@@ -28,14 +28,14 @@ class UserType extends AbstractType
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'required' => false,
-            ])
+//            ->add('password', PasswordType::class, [
+//                'label' => 'Mot de passe',
+//                'required' => false,
+//            ])
             ->add('email', EmailType::class, [
                 'label' => 'E-mail'
             ])
-            ->add('avatar', TextType::class, [
+            ->add('avatar', FileType::class, [
                 'label' => 'Avatar',
                 'required' => false,
             ])

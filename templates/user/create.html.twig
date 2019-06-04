@@ -3,59 +3,61 @@
 {% block title %}Créer son compte{% endblock %}
 
 {% block body %}
-    <div class="card">
-        <div class="card-header text-center">
-            <h5 class="card-title">Créer son compte</h5>
-        </div>
-        <div class="card-body text-center">
-            {{ form_start(user_form) }}
-            <div class="form-group">
-                {{ form_label(user_form.name) }}
-                {{ form_widget(user_form.name, {'attr': {'class': 'form-control'}}) }}
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h5 class="card-title">{{ app.user ? 'Mettre à jour mon compte' : 'Créer son compte' }}</h5>
             </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.name) }}
+            <div class="card-body text-center">
+                {{ form_start(user_form, {'action': path('user_update')}) }}
+                <div class="form-group">
+                    {{ form_label(user_form.name) }}
+                    {{ form_widget(user_form.name, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.name) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(user_form.pseudo) }}
+                    {{ form_widget(user_form.pseudo, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.pseudo) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(user_form.birthday) }}
+                    {{ form_widget(user_form.birthday, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.birthday) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(user_form.email) }}
+                    {{ form_widget(user_form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.email) }}
+                </div>
+                {#<div class="form-group">
+                    {{ form_label(user_form.password) }}
+                    {{ form_widget(user_form.password, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.password) }}
+                </div>#}
+                <div class="custom-file">
+                    {{ form_label(user_form.avatar, null, {'label_attr': {'class': 'custom-file-label'}}) }}
+                    {{ form_widget(user_form.avatar, {'attr': {'class': 'custom-file-input'}}) }}
+                </div>
+                <div class="bg-warning">
+                    {{ form_errors(user_form.avatar) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(user_form.submit) }}
+                    {{ form_widget(user_form.submit, {'attr': {'class': 'form-control btn btn-primary'}}) }}
+                </div>
+                {{ form_end(user_form) }}
             </div>
-            <div class="form-group">
-                {{ form_label(user_form.pseudo) }}
-                {{ form_widget(user_form.pseudo, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.pseudo) }}
-            </div>
-            <div class="form-group">
-                {{ form_label(user_form.birthday) }}
-                {{ form_widget(user_form.birthday, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.birthday) }}
-            </div>
-            <div class="form-group">
-                {{ form_label(user_form.email) }}
-                {{ form_widget(user_form.email, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.email) }}
-            </div>
-            <div class="form-group">
-                {{ form_label(user_form.password) }}
-                {{ form_widget(user_form.password, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.password) }}
-            </div>
-            <div class="custom-file">
-                {{ form_label(user_form.avatar, null, {'label_attr': {'class': 'custom-file-label'}}) }}
-                {{ form_widget(user_form.avatar, {'attr': {'class': 'custom-file-input'}}) }}
-            </div>
-            <div class="bg-warning">
-                {{ form_errors(user_form.avatar) }}
-            </div>
-            <div class="form-group">
-                {{ form_label(user_form.submit) }}
-                {{ form_widget(user_form.submit, {'attr': {'class': 'form-control btn btn-primary'}}) }}
-            </div>
-            {{ form_end(user_form) }}
         </div>
     </div>
 {% endblock %}

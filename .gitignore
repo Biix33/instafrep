@@ -83,4 +83,5 @@ lupaProject.json
 
 
 # Source files with solutions
-
+/public/uploads/**
+!/public/uploads/.keep

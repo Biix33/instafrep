@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}", name="user_profile")
+     * @Route("/user/{id}", name="user_profile", requirements={"id"="\d+"})
      * @param int $id
      * @return Response
      */
@@ -61,21 +62,29 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("user/update/{id}", name="user_update", requirements={"id": "\d+"})
-     * @param int $id
+     * @Route("/user/me", name="user_update")
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function update(int $id, Request $request)
+    public function update(Request $request)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        /** @var $user User */
+        $user = $this->getUser();
+        $user->setAvatar(null); // TODO: remove this line asap
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()):
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
-            return $this->redirectToRoute('user_profile', ['id' => $id]);
+            /** @var UploadedFile $file */
+            $file = $user->getAvatar();
+            $ext = $file->guessExtension();
+            $basename = 'profile-picture-'.$user->getId();
+            $filename = $basename . '.' . $ext;
+            $file->move($this->getParameter('user_upload_folder'), $filename);
+            $user->setAvatar($filename);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
         endif;
 
         return $this->render('user/create.html.twig', [

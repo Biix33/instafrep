@@ -3,7 +3,7 @@
         <div class="col-md-2">
             <a href="{{ path('user_profile', {'id':post.userId.id}) }}">
                 <img alt="" class="card-img img-fluid avatar"
-                     src="{{ post.userId.avatar }}">
+                     src="{{ ('http' in post.userId.avatar) ? post.userId.avatar : asset('uploads/'~post.userId.avatar) }}">
             </a>
         </div>
         <div class="col-md-10 text-center">
@@ -13,7 +13,8 @@
     <div class="card-body">
         <a href="{{ path('post_single', {'id':post.id}) }}" class="row">
             <div class="col-md-2">
-                <img src="{{ post.attachement }}" alt="" class="card-img img-fluid">
+                <img src="{{ ('http' in post.attachement) ? post.attachement : asset('uploads/'~post.attachement) }}"
+                     alt="" class="card-img img-fluid">
             </div>
             <div class="col-md-10">
                 <p class="card-text">{{ post.content }}</p>
