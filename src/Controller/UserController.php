@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Utils\ImageCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -64,9 +65,10 @@ class UserController extends AbstractController
     /**
      * @Route("/user/me", name="user_update")
      * @param Request $request
+     * @param ImageCreator $imageCreator
      * @return RedirectResponse|Response
      */
-    public function update(Request $request)
+    public function update(Request $request, ImageCreator $imageCreator)
     {
         /** @var $user User */
         $user = $this->getUser();
@@ -76,8 +78,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()):
+
             /** @var UploadedFile $file */
             $file = $user->getAvatar();
+            if (!$file):
+                $file = $imageCreator->getImage(60, 60);
+            endif;
             $ext = $file->guessExtension();
             $basename = 'profile-picture-'.$user->getId();
             $filename = $basename . '.' . $ext;
